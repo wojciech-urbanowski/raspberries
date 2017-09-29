@@ -18,7 +18,11 @@ def keepcpubusy(keepbusy):
                         dummy = 0
 			now = datetime.now()
 
-time.sleep(random.randint(0,59))
+thingspeakapikeyfile = open(sys.argv[1], "r")
+thingspeakapikey = thingspeakapikeyfile.read().strip()
+thingspeakapikeyfile.close()
+
+#time.sleep(random.randint(0,59))
 
 for dummy in range(10):
 	time.sleep(1)
@@ -50,7 +54,8 @@ for dummy in range(10):
 				rawTemperature = matchObj1.group(0)[2:]
 				temperature = float(rawTemperature)/1000
 				#print temperature
-				request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=CSOPE6D1L7VQPSXG&field1=" + str(temperature))
+				#print "https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field1=" + str(temperature)
+				request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field1=" + str(temperature))
 				request.read()
 				request.close()
 				break
