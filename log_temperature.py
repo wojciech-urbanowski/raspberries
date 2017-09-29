@@ -22,7 +22,7 @@ thingspeakapikeyfile = open(sys.argv[1], "r")
 thingspeakapikey = thingspeakapikeyfile.read().strip()
 thingspeakapikeyfile.close()
 
-#time.sleep(random.randint(0,59))
+time.sleep(random.randint(0,59))
 
 for dummy in range(10):
 	time.sleep(1)
