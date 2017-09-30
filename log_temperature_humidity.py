@@ -21,18 +21,19 @@ def keepcpubusy(keepbusy):
 			now = datetime.now()
 
 thingspeakapikey = sys.argv[1].strip()
-initialsleep = int(sys.argv[2])
-fieldTemp = sys.argv[3].strip()
-fieldHumid = sys.argv[4].strip()
-dhtgpio = int(sys.argv[5])
+initialsleepoffset = int(sys.argv[2])
+initialsleep = int(sys.argv[3])
+fieldTemp = sys.argv[4].strip()
+fieldHumid = sys.argv[5].strip()
+dhtgpio = int(sys.argv[6])
 
 verbose = False
-if (len(sys.argv) >= 7):
-	if (len(sys.argv[6].strip()) > 0):
+if (len(sys.argv) >= 8):
+	if (len(sys.argv[7].strip()) > 0):
 		verbose = True
 
-if (initialsleep > 0):
-	time.sleep(random.randint(0,initialsleep))
+if (initialsleepoffset > 0 or initialsleep > 0):
+	time.sleep(initialsleepoffset + random.randint(0,initialsleep))
 
 for dummy in range(10):
 	time.sleep(1)
