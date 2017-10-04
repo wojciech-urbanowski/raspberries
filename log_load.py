@@ -6,14 +6,15 @@ import os
 import time
 import random
 
-thingspeakapikeyfile = open(sys.argv[1], "r")
-thingspeakapikey = thingspeakapikeyfile.read().strip()
-thingspeakapikeyfile.close()
+thingspeakapikey = sys.argv[1].strip()
+initialsleep = int(sys.argv[2])
+field = sys.argv[3]
 
-time.sleep(random.randint(0,59))
+if (initialsleep > 0):
+	time.sleep(random.randint(0,initialsleep))
 
 avgload = os.getloadavg()[1]
-print avgload
-request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field3=" + str(avgload))
+#print avgload
+request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field" + field + "=" + str(avgload))
 request.read()
 request.close()
