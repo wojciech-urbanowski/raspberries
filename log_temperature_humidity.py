@@ -10,15 +10,15 @@ from threading import Thread
 
 import Adafruit_DHT
 
-def keepcpubusy(keepbusy):
-	start = datetime.now()
-	now = start
-        dummy = 0
-        while(keepbusy[0]>0 and (now - start).total_seconds() <= 10):
-                dummy = dummy + 1
-                if (dummy > 1024):
-                        dummy = 0
-			now = datetime.now()
+#def keepcpubusy(keepbusy):
+#	start = datetime.now()
+#	now = start
+#        dummy = 0
+#        while(keepbusy[0]>0 and (now - start).total_seconds() <= 10):
+#                dummy = dummy + 1
+#                if (dummy > 1024):
+#                        dummy = 0
+#			now = datetime.now()
 
 thingspeakapikey = sys.argv[1].strip()
 initialsleepoffset = int(sys.argv[2])
@@ -38,10 +38,10 @@ if (initialsleepoffset > 0 or initialsleep > 0):
 for dummy in range(10):
 	time.sleep(1)
 
-	keepbusy = [1];
-	t = Thread(target=keepcpubusy, args=(keepbusy,))
-	t.start()
-	time.sleep(1)
+#	keepbusy = [1];
+#	t = Thread(target=keepcpubusy, args=(keepbusy,))
+#	t.start()
+#	time.sleep(1)
 
 	if (verbose):
 		print "Pin:"
@@ -49,8 +49,8 @@ for dummy in range(10):
 
 	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, dhtgpio)
 
-	keepbusy[0] = 0
-	t.join()
+#	keepbusy[0] = 0
+#	t.join()
 
 	if (verbose):
 		print humidity
