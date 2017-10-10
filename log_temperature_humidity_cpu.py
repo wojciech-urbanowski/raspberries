@@ -21,7 +21,7 @@ dhtgpio = int(sys.argv[8])
 
 verbose = False
 if (len(sys.argv) >= 10):
-	if (len(sys.argv[8].strip()) > 0):
+	if (len(sys.argv[9].strip()) > 0):
 		verbose = True
 
 if (initialsleepoffset > 0 or initialsleep > 0):
