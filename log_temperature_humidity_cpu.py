@@ -5,6 +5,8 @@ import re
 import urllib2
 import time
 import random
+import subprocess
+import os
 from datetime import datetime
 from threading import Thread
 
@@ -27,21 +29,17 @@ if (len(sys.argv) >= 10):
 if (initialsleepoffset > 0 or initialsleep > 0):
 	time.sleep(initialsleepoffset + random.randint(0,initialsleep))
 
-temperatureContent = subprocess.check_output(['/opt/vc/bin/vcgencmd', 'measure_temp'])
+cpuTemperatureContent = subprocess.check_output(['/opt/vc/bin/vcgencmd', 'measure_temp'])
 avgload = os.getloadavg()[1]
 
-temperatureMatchObj0 = re.search(r'temp=[0-9]*\.[0-9]*\'C', temperatureContent)
-temperature = 0.0
-if temperatureMatchObj0:
-        rawTemperature = temperatureMatchObj0.group(0)[5:-2]
-        temperature = float(rawTemperature)
+cpuTemperatureMatchObj0 = re.search(r'temp=[0-9]*\.[0-9]*\'C', cpuTemperatureContent)
+cpuTemperature = 0.0
+if cpuTemperatureMatchObj0:
+        rawCPUTemperature = cpuTemperatureMatchObj0.group(0)[5:-2]
+        cpuTemperature = float(rawCPUTemperature)
 
 for dummy in range(10):
 	time.sleep(1)
-
-	if (verbose):
-		print "Pin:"
-		print dhtgpio
 
 	humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, dhtgpio)
 
@@ -50,7 +48,7 @@ for dummy in range(10):
 		print temperature
 
 	if humidity is not None and temperature is not None:
-		request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field" + fieldTemp + "=" + str(temperature) + "&field" + fieldHumid + "=" + str(humidity) + "&field" + fieldCPUTemp + "=" + str(temperature) + "&field" + fieldLoad + "=" + str(avgload))
+		request = urllib2.urlopen("https://api.thingspeak.com/update?api_key=" + thingspeakapikey + "&field" + fieldTemp + "=" + str(temperature) + "&field" + fieldHumid + "=" + str(humidity) + "&field" + fieldCPUTemp + "=" + str(cpuTemperature) + "&field" + fieldLoad + "=" + str(avgload))
 		request.read()
 		request.close()
 		break
